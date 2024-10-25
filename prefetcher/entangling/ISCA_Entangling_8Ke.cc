@@ -19,14 +19,13 @@
 
 using namespace std;
 
-
 #define MAX_NUM_SET 64
 #define MAX_NUM_WAY 8
 
-extern uint64_t current_core_cycle[NUM_CPUS];
-extern uint8_t  all_warmup_complete;
+uint8_t  all_warmup_complete;
 
 // To access cpu in my functions
+uint64_t l1i_current_cycle;
 uint32_t l1i_cpu_id;
 
 uint64_t l1i_last_basic_block;
@@ -258,7 +257,7 @@ uint64_t l1i_hist_table_head_time[NUM_CPUS]; // 64 bits
 
 void l1i_init_hist_table() {
   l1i_hist_table_head[l1i_cpu_id] = 0;
-  l1i_hist_table_head_time[l1i_cpu_id] = current_core_cycle[l1i_cpu_id];
+  l1i_hist_table_head_time[l1i_cpu_id] = l1i_current_cycle;
   for (uint32_t i = 0; i < L1I_HIST_TABLE_ENTRIES; i++) {
     l1i_hist_table[l1i_cpu_id][i].tag = 0;
     l1i_hist_table[l1i_cpu_id][i].time_diff = 0;
@@ -277,7 +276,7 @@ uint64_t l1i_find_hist_entry(uint64_t line_addr) {
 // It can have duplicated entries if the line was evicted in between
 uint32_t l1i_add_hist_table(uint64_t line_addr) {
   // Insert empty addresses in hist not to have timediff overflows
-  while(current_core_cycle[l1i_cpu_id] - l1i_hist_table_head_time[l1i_cpu_id] >= L1I_TIME_DIFF_OVERFLOW) {
+  while(l1i_current_cycle - l1i_hist_table_head_time[l1i_cpu_id] >= L1I_TIME_DIFF_OVERFLOW) {
     l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].tag = 0;
     l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].time_diff = L1I_TIME_DIFF_MASK;
     l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].bb_size = 0;
@@ -287,11 +286,11 @@ uint32_t l1i_add_hist_table(uint64_t line_addr) {
   
   // Allocate a new entry (evict old one if necessary)
   l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].tag = line_addr & L1I_HIST_TAG_MASK;
-  l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].time_diff = (current_core_cycle[l1i_cpu_id] - l1i_hist_table_head_time[l1i_cpu_id]) & L1I_TIME_DIFF_MASK;
+  l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].time_diff = (l1i_current_cycle - l1i_hist_table_head_time[l1i_cpu_id]) & L1I_TIME_DIFF_MASK;
   l1i_hist_table[l1i_cpu_id][l1i_hist_table_head[l1i_cpu_id]].bb_size = 0;
   uint32_t pos = l1i_hist_table_head[l1i_cpu_id];
   l1i_hist_table_head[l1i_cpu_id] = (l1i_hist_table_head[l1i_cpu_id] + 1) % L1I_HIST_TABLE_ENTRIES;
-  l1i_hist_table_head_time[l1i_cpu_id] = current_core_cycle[l1i_cpu_id];
+  l1i_hist_table_head_time[l1i_cpu_id] = l1i_current_cycle;
   return pos;
 }
 
@@ -437,7 +436,7 @@ void l1i_add_timing_entry(uint64_t line_addr, uint32_t source_set, uint32_t sour
   l1i_timing_mshr_table[l1i_cpu_id][i].tag = line_addr & L1I_TIMING_MSHR_TAG_MASK;
   l1i_timing_mshr_table[l1i_cpu_id][i].source_set = source_set;
   l1i_timing_mshr_table[l1i_cpu_id][i].source_way = source_way;
-  l1i_timing_mshr_table[l1i_cpu_id][i].timestamp = current_core_cycle[l1i_cpu_id] & L1I_TIME_MASK;
+  l1i_timing_mshr_table[l1i_cpu_id][i].timestamp = l1i_current_cycle & L1I_TIME_MASK;
   l1i_timing_mshr_table[l1i_cpu_id][i].accessed = false;
 }
 
@@ -533,7 +532,7 @@ uint64_t l1i_get_latency_timing_mshr(uint64_t line_addr, uint32_t &pos_hist) {
   if (index == L1I_TIMING_MSHR_SIZE) return 0;
   if (!l1i_timing_mshr_table[l1i_cpu_id][index].accessed) return 0;
   pos_hist = l1i_timing_mshr_table[l1i_cpu_id][index].pos_hist;
-  return l1i_get_latency(current_core_cycle[l1i_cpu_id], l1i_timing_mshr_table[l1i_cpu_id][index].timestamp);
+  return l1i_get_latency(l1i_current_cycle, l1i_timing_mshr_table[l1i_cpu_id][index].timestamp);
 }
 
 // ENTANGLED TABLE
@@ -822,6 +821,7 @@ void CACHE::prefetcher_initialize()
   l1i_last_basic_block = 0;
   l1i_consecutive_count = 0;
   l1i_basic_block_merge_diff = 0;
+  l1i_current_cycle = current_cycle;
 
   l1i_init_hist_table();
   l1i_init_timing_tables();
@@ -831,10 +831,11 @@ void CACHE::prefetcher_initialize()
 void  CACHE::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t branch_target)
 {
 }
-
-void CACHE::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t prefetch_hit)
+// (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
+uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr,uint64_t ip, uint8_t cache_hit, bool prefetch_hit, uint8_t type, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
+  l1i_current_cycle = current_cycle;
   uint64_t line_addr = v_addr >> LOG2_BLOCK_SIZE;
 
   if (!cache_hit) assert(!prefetch_hit);
@@ -856,7 +857,7 @@ void CACHE::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t
   bool consecutive = false;
   
   if (l1i_last_basic_block + l1i_consecutive_count == line_addr) { // Same
-    return;
+    return metadata_in;
   } else if (l1i_last_basic_block + l1i_consecutive_count + 1 == line_addr) { // Consecutive
     l1i_consecutive_count++;
     consecutive = true;
@@ -868,7 +869,7 @@ void CACHE::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t
   for (uint32_t i = 1; i <= bb_size; i++) {
     uint64_t pf_addr = v_addr + i * (1<<LOG2_BLOCK_SIZE);
     if (!l1i_ongoing_request(pf_addr >> LOG2_BLOCK_SIZE)) {
-      if (prefetch_code_line(pf_addr)) {
+      if (prefetch_line(pf_addr, true, metadata_in)) {
 	l1i_add_timing_entry(pf_addr >> LOG2_BLOCK_SIZE, 0, L1I_ENTANGLED_TABLE_WAYS);
       }
     }
@@ -887,7 +888,7 @@ void CACHE::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t
       for (uint32_t i = 0; i <= bb_size; i++) {
 	uint64_t pf_line_addr = entangled_line_addr + i;
 	if (!l1i_ongoing_request(pf_line_addr)) {
-	  if (prefetch_code_line(pf_line_addr << LOG2_BLOCK_SIZE)) {
+	  if (prefetch_line(pf_line_addr << LOG2_BLOCK_SIZE, true, metadata_in)) {
 	    l1i_add_timing_entry(pf_line_addr, source_set, (i == 0) ? source_way : L1I_ENTANGLED_TABLE_WAYS);
 	  }
 	}
@@ -945,7 +946,7 @@ void CACHE::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t
   if (source_way < L1I_ENTANGLED_TABLE_WAYS) {
     l1i_update_confidence_entangled_table(source_set, source_way, line_addr, false);
   }
-
+  return metadata_in;
 }
 
 void CACHE::prefetcher_cycle_operate()
@@ -956,12 +957,13 @@ void CACHE::prefetcher_cycle_operate()
   }
 }
 
-void CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr)
+// impl_prefetcher_cache_fill(uint64_t addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_addr, uint32_t metadata_in)
+uint32_t CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr,  uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
+  l1i_current_cycle = current_cycle;
   uint64_t line_addr = (v_addr >> LOG2_BLOCK_SIZE);
   uint64_t evicted_line_addr = (evicted_v_addr >> LOG2_BLOCK_SIZE);
-  
   // Line is in cache
   if (evicted_v_addr) {
     uint32_t source_set = 0;
@@ -1001,6 +1003,7 @@ void CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, u
       }
     }
   }
+  return metadata_in;
 }
 
 void CACHE::prefetcher_final_stats()
