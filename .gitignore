@@ -5,6 +5,7 @@ _configuration.mk
 *.pyc
 
 bin/
+ipc1_public/
 
 **/*.o
 **/*.d
