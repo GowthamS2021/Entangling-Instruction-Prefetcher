@@ -413,6 +413,7 @@ uint32_t l1i_get_invalid_timing_mshr_entry() {
   for (uint32_t i = 0; i < L1I_TIMING_MSHR_SIZE; i++) {
     if (!l1i_timing_mshr_table[l1i_cpu_id][i].valid) return i;
   }
+  // cerr << 1 << endl;
   assert(false); // It must return a free entry
   return L1I_TIMING_MSHR_SIZE;  
 }
@@ -422,6 +423,7 @@ uint32_t l1i_get_invalid_timing_cache_entry(uint64_t line_addr) {
   for (uint32_t j = 0; j < MAX_NUM_WAY; j++) {
     if (!l1i_timing_cache_table[l1i_cpu_id][i][j].valid) return j;
   }
+  // cerr << 1 << endl;
   assert(false); // It must return a free entry
   return MAX_NUM_WAY;  
 }
