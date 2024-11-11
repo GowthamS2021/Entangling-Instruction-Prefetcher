@@ -532,6 +532,7 @@ int CACHE::add_wq(PACKET* packet)
 int CACHE::prefetch_line(uint64_t pf_addr, bool fill_this_level, uint32_t prefetch_metadata)
 {
   pf_requested++;
+  // cerr << NAME << endl;
 
   PACKET pf_packet;
   pf_packet.type = PREFETCH;
