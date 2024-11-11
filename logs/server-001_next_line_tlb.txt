@@ -1,1 +1,1 @@
-WARNING: physical memory size is smaller than virtual memory size.
+[VMEM] WARNING: physical memory size is smaller than virtual memory size.

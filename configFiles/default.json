@@ -1,5 +1,5 @@
 {
-    "executable_name": "no_instr",
+    "executable_name": "bin/no_instr",
     "block_size": 64,
     "page_size": 4096,
     "heartbeat_frequency": 10000000,

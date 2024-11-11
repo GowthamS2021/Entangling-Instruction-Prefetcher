@@ -875,6 +875,7 @@ void CACHE::prefetcher_initialize()
 }
 
 // (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
+// (uint64_t addr, uint64_t ip, uint8_t cache_hit, uint8_t type, uint32_t metadata_in)
 uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr, uint64_t ip, uint8_t cache_hit, bool prefetch_hit, uint8_t type, uint32_t metadata_in)
 {
 //   cerr << "notify" << endl;

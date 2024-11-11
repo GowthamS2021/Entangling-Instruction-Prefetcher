@@ -1,9 +1,11 @@
 /*
 
 This code implements a hashed perceptron branch predictor using geometric
-history lengths and dynamic threshold setting.  It was written by Daniel
-A. Jiménez in March 2019.
+history lengths and dynamic threshold setting.
 
+It was written by Daniel A. Jiménez in March 2019. To the extent allowed by
+law, the author abdicates all rights to this work and places it in the public
+domain.
 
 The original perceptron branch predictor is from Jiménez and Lin, "Dynamic
 Branch Prediction with Perceptrons," HPCA 2001.
@@ -68,6 +70,10 @@ sources for you to plagiarize.
 
 #define SPEED 18
 
+// geometric global history lengths
+
+int history_lengths[NTABLES] = {0, 3, 4, 6, 8, 10, 14, 19, 26, 36, 49, 67, 91, 125, 170, MAXHIST};
+
 // 12-bit indices for the tables
 
 #define LOG_TABLE_SIZE 12
@@ -76,12 +82,6 @@ sources for you to plagiarize.
 // this many 12-bit words will be kept in the global history
 
 #define NGHIST_WORDS (MAXHIST / LOG_TABLE_SIZE + 1)
-
-namespace
-{
-// geometric global history lengths
-
-inline constexpr int history_lengths[NTABLES] = {0, 3, 4, 6, 8, 10, 14, 19, 26, 36, 49, 67, 91, 125, 170, MAXHIST};
 
 // tables of 8-bit weights
 
@@ -93,7 +93,7 @@ unsigned int ghist_words[NUM_CPUS][NGHIST_WORDS];
 
 // remember the indices into the tables from prediction to update
 
-uint64_t indices[NUM_CPUS][NTABLES];
+unsigned int indices[NUM_CPUS][NTABLES];
 
 // initialize theta to something reasonable,
 int theta[NUM_CPUS],
@@ -103,30 +103,29 @@ int theta[NUM_CPUS],
 
     // perceptron sum
     yout[NUM_CPUS];
-} // namespace
 
 void O3_CPU::initialize_branch_predictor()
 {
   // zero out the weights tables
 
-  memset(::tables, 0, sizeof(::tables));
+  memset(tables, 0, sizeof(tables));
 
   // zero out the global history
 
-  memset(::ghist_words, 0, sizeof(::ghist_words));
+  memset(ghist_words, 0, sizeof(ghist_words));
 
   // make a reasonable theta
 
-  for (unsigned i = 0; i < NUM_CPUS; i++)
-    ::theta[i] = 10;
+  for (int i = 0; i < NUM_CPUS; i++)
+    theta[i] = 10;
 }
 
-uint8_t O3_CPU::predict_branch(uint64_t pc)
+uint8_t O3_CPU::predict_branch(uint64_t pc, uint64_t predicted_target, uint8_t always_taken, uint8_t branch_type)
 {
 
   // initialize perceptron sum
 
-  ::yout[cpu] = 0;
+  yout[cpu] = 0;
 
   // for each table...
 
@@ -139,7 +138,7 @@ uint8_t O3_CPU::predict_branch(uint64_t pc)
     // hash global history bits 0..n-1 into x by XORing the words from the
     // ghist_words array
 
-    uint64_t x = 0;
+    unsigned int x = 0;
 
     // most of the words are 12 bits long
 
@@ -153,11 +152,11 @@ uint8_t O3_CPU::predict_branch(uint64_t pc)
 
     int j;
     for (j = 0; j < most_words; j++)
-      x ^= ::ghist_words[cpu][j];
+      x ^= ghist_words[cpu][j];
 
     // XOR in the last word
 
-    x ^= ::ghist_words[cpu][j] & ((1 << last_word) - 1);
+    x ^= ghist_words[cpu][j] & ((1 << last_word) - 1);
 
     // XOR in the PC to spread accesses around (like gshare)
 
@@ -169,13 +168,13 @@ uint8_t O3_CPU::predict_branch(uint64_t pc)
 
     // remember this index for update
 
-    ::indices[cpu][i] = x;
+    indices[cpu][i] = x;
 
     // add the selected weight to the perceptron sum
 
-    ::yout[cpu] += ::tables[cpu][i][x];
+    yout[cpu] += tables[cpu][i][x];
   }
-  return ::yout[cpu] >= 1;
+  return yout[cpu] >= 1;
 }
 
 void O3_CPU::last_branch_result(uint64_t pc, uint64_t branch_target, uint8_t taken, uint8_t branch_type)
@@ -183,7 +182,7 @@ void O3_CPU::last_branch_result(uint64_t pc, uint64_t branch_target, uint8_t tak
 
   // was this prediction correct?
 
-  bool correct = taken == (::yout[cpu] >= 1);
+  bool correct = taken == (yout[cpu] >= 1);
 
   // insert this branch outcome into the global history
 
@@ -192,27 +191,27 @@ void O3_CPU::last_branch_result(uint64_t pc, uint64_t branch_target, uint8_t tak
 
     // shift b into the lsb of the current word
 
-    ::ghist_words[cpu][i] <<= 1;
-    ::ghist_words[cpu][i] |= b;
+    ghist_words[cpu][i] <<= 1;
+    ghist_words[cpu][i] |= b;
 
     // get b as the previous msb of the current word
 
-    b = !!(::ghist_words[cpu][i] & TABLE_SIZE);
-    ::ghist_words[cpu][i] &= TABLE_SIZE - 1;
+    b = !!(ghist_words[cpu][i] & TABLE_SIZE);
+    ghist_words[cpu][i] &= TABLE_SIZE - 1;
   }
 
   // get the magnitude of yout
 
-  int a = (::yout[cpu] < 0) ? -::yout[cpu] : ::yout[cpu];
+  int a = (yout[cpu] < 0) ? -yout[cpu] : yout[cpu];
 
   // perceptron learning rule: train if misprediction or weak correct prediction
 
-  if (!correct || a < ::theta[cpu]) {
+  if (!correct || a < theta[cpu]) {
     // update weights
     for (int i = 0; i < NTABLES; i++) {
       // which weight did we use to compute yout?
 
-      int* c = &::tables[cpu][i][::indices[cpu][i]];
+      int* c = &tables[cpu][i][indices[cpu][i]];
 
       // increment if taken, decrement if not, saturating at 127/-128
 
@@ -231,19 +230,19 @@ void O3_CPU::last_branch_result(uint64_t pc, uint64_t branch_target, uint8_t tak
 
       // increase theta after enough mispredictions
 
-      ::tc[cpu]++;
-      if (::tc[cpu] >= SPEED) {
-        ::theta[cpu]++;
-        ::tc[cpu] = 0;
+      tc[cpu]++;
+      if (tc[cpu] >= SPEED) {
+        theta[cpu]++;
+        tc[cpu] = 0;
       }
-    } else if (a < ::theta[cpu]) {
+    } else if (a < theta[cpu]) {
 
       // decrease theta after enough weak but correct predictions
 
-      ::tc[cpu]--;
-      if (::tc[cpu] <= -SPEED) {
-        ::theta[cpu]--;
-        ::tc[cpu] = 0;
+      tc[cpu]--;
+      if (tc[cpu] <= -SPEED) {
+        theta[cpu]--;
+        tc[cpu] = 0;
       }
     }
   }

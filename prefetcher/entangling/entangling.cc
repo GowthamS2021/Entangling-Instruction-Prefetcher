@@ -22,7 +22,7 @@ using namespace std;
 #define MAX_NUM_SET 64
 #define MAX_NUM_WAY 8
 
-uint8_t  all_warmup_complete;
+extern uint8_t  all_warmup_complete;
 
 // To access cpu in my functions
 uint64_t l1i_current_cycle;
@@ -814,7 +814,7 @@ void l1i_update_confidence_entangled_table(uint32_t set, uint32_t way, uint64_t 
 
 // INTERFACE
 
-void CACHE::prefetcher_initialize() 
+void O3_CPU::prefetcher_initialize() 
 {
   cout << "CPU " << cpu << " Entangling prefetcher" << endl;
 
@@ -830,11 +830,12 @@ void CACHE::prefetcher_initialize()
   l1i_init_entangled_table();
 }
 
-void  CACHE::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t branch_target)
+void  O3_CPU::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t branch_target)
 {
 }
+
 // (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
-uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr,uint64_t ip, uint8_t cache_hit, bool prefetch_hit, uint8_t type, uint32_t metadata_in)
+uint32_t O3_CPU::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;
@@ -871,7 +872,7 @@ uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr,uint64_t ip, uint8_t ca
   for (uint32_t i = 1; i <= bb_size; i++) {
     uint64_t pf_addr = v_addr + i * (1<<LOG2_BLOCK_SIZE);
     if (!l1i_ongoing_request(pf_addr >> LOG2_BLOCK_SIZE)) {
-      if (prefetch_line(pf_addr, true, metadata_in)) {
+      if (prefetch_code_line(pf_addr)) {
 	l1i_add_timing_entry(pf_addr >> LOG2_BLOCK_SIZE, 0, L1I_ENTANGLED_TABLE_WAYS);
       }
     }
@@ -890,7 +891,7 @@ uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr,uint64_t ip, uint8_t ca
       for (uint32_t i = 0; i <= bb_size; i++) {
 	uint64_t pf_line_addr = entangled_line_addr + i;
 	if (!l1i_ongoing_request(pf_line_addr)) {
-	  if (prefetch_line(pf_line_addr << LOG2_BLOCK_SIZE, true, metadata_in)) {
+	  if (prefetch_code_line(pf_line_addr << LOG2_BLOCK_SIZE)) {
 	    l1i_add_timing_entry(pf_line_addr, source_set, (i == 0) ? source_way : L1I_ENTANGLED_TABLE_WAYS);
 	  }
 	}
@@ -951,7 +952,7 @@ uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr,uint64_t ip, uint8_t ca
   return metadata_in;
 }
 
-void CACHE::prefetcher_cycle_operate()
+void O3_CPU::prefetcher_cycle_operate()
 {
   if (!all_warmed_up && all_warmup_complete > NUM_CPUS) {
     l1i_init_stats_table();
@@ -960,7 +961,7 @@ void CACHE::prefetcher_cycle_operate()
 }
 
 // impl_prefetcher_cache_fill(uint64_t addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_addr, uint32_t metadata_in)
-uint32_t CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr,  uint32_t metadata_in)
+uint32_t O3_CPU::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr,  uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;
@@ -1008,7 +1009,7 @@ uint32_t CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t wa
   return metadata_in;
 }
 
-void CACHE::prefetcher_final_stats()
+void O3_CPU::prefetcher_final_stats()
 {
   cout << "CPU " << cpu << " L1I Entangling prefetcher final stats" << endl;
   l1i_print_stats_table();

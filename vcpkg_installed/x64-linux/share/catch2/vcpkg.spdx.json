@@ -1,0 +1,137 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/catch2-x64-linux-3.3.2-aa70aff4-d571-4566-a389-e2d5ea204567",
+  "name": "catch2:x64-linux@3.3.2 2150a7001dcc9b650e907f3a8b8d9053a1fb17110812499be87ab8a05a7b13af",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-664f8bb619b752430368d0f30a8289b761f5caba"
+    ],
+    "created": "2024-10-25T08:38:11Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-2"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-2",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-2",
+      "relationshipType": "DEPENDENCY_MANIFEST_OF",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "catch2",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "3.3.2",
+      "downloadLocation": "NOASSERTION",
+      "homepage": "https://github.com/catchorg/Catch2",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "A modern, header-only test framework for unit testing.",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "catch2:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "2150a7001dcc9b650e907f3a8b8d9053a1fb17110812499be87ab8a05a7b13af",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "catchorg/Catch2",
+      "downloadLocation": "git+https://github.com/catchorg/Catch2@v${VERSION}",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "3d0c5666509a19be54ea0c48a3c8e1c4a951a2d991a7c9f7fe6d326661464538f1ab9dc573b1b2647f49fb6bef45bbd866142a4ce0fba38545ad182b8d55f61f"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "cc1151485bf7780c0ec98396a3df8fab9c2cc5766b6d393aa378720c34c6f6e9"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./fix-install-path.patch",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d67374154f1910e41937173e9871991dfd5e43f43cca19a2fec10d3392000275"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./vcpkg.json",
+      "SPDXID": "SPDXRef-file-2",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b847c7d86d4528fee1caa402cb0d8116ec45858611c4d6aedefc38b756566060"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/cli11-x64-linux-2.3.1-fd01431d-2d99-44c4-b06b-2ff04f6a0f72",
+  "name": "cli11:x64-linux@2.3.1 f4378ca98cef4ae3b5032845d6b24a69a6c86a04743ecf72f1c8e9fc74a38c2b",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-664f8bb619b752430368d0f30a8289b761f5caba"
+    ],
+    "created": "2024-10-25T08:38:12Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "DEPENDENCY_MANIFEST_OF",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "cli11",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2.3.1",
+      "downloadLocation": "NOASSERTION",
+      "homepage": "https://github.com/CLIUtils/CLI11",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "CLI11 is a command line parser for C++11 and beyond that provides a rich feature set with a simple and intuitive interface.",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "cli11:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "f4378ca98cef4ae3b5032845d6b24a69a6c86a04743ecf72f1c8e9fc74a38c2b",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "CLIUtils/CLI11",
+      "downloadLocation": "git+https://github.com/CLIUtils/CLI11@v2.3.1",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "7805a3bff5ce443e93a005341680db1e618d5b0789a697daaac881f9ccac76f855ea3d43c9c5b13c33c2bf590138241df9e55d70e133562272f0859d8341af09"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0564286730055f2bc7052c7ddb5e846599254198f8fd897db43c99b7003e0f3b"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b367c67543863d40ce2cab62eb591451542c5eeadb45ee91d23059ecd5ef63e8"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}
