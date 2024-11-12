@@ -16,14 +16,14 @@ cpu0_L1D next line prefetcher
 WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
 WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
 Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 39 sec) 
-Heartbeat CPU 0 instructions: 20000000 cycles: 5099461 heartbeat IPC: 3.90937 cumulative IPC: 3.92198 (Simulation time: 0 hr 1 min 21 sec) 
+Heartbeat CPU 0 instructions: 20000000 cycles: 5099461 heartbeat IPC: 3.90937 cumulative IPC: 3.92198 (Simulation time: 0 hr 1 min 20 sec) 
 
-Warmup complete CPU 0 instructions: 25000004 cycles: 6377332 (Simulation time: 0 hr 1 min 40 sec) 
+Warmup complete CPU 0 instructions: 25000004 cycles: 6377332 (Simulation time: 0 hr 1 min 41 sec) 
 
-Heartbeat CPU 0 instructions: 30000003 cycles: 9862250 heartbeat IPC: 2.09961 cumulative IPC: 1.43475 (Simulation time: 0 hr 2 min 14 sec) 
-Heartbeat CPU 0 instructions: 40000001 cycles: 18049968 heartbeat IPC: 1.22134 cumulative IPC: 1.28506 (Simulation time: 0 hr 3 min 33 sec) 
-Heartbeat CPU 0 instructions: 50000003 cycles: 25748153 heartbeat IPC: 1.29901 cumulative IPC: 1.2906 (Simulation time: 0 hr 4 min 56 sec) 
-Finished CPU 0 instructions: 25000004 cycles: 19370822 cumulative IPC: 1.2906 (Simulation time: 0 hr 4 min 56 sec) 
+Heartbeat CPU 0 instructions: 30000003 cycles: 9862250 heartbeat IPC: 2.09961 cumulative IPC: 1.43475 (Simulation time: 0 hr 2 min 16 sec) 
+Heartbeat CPU 0 instructions: 40000001 cycles: 18049968 heartbeat IPC: 1.22134 cumulative IPC: 1.28506 (Simulation time: 0 hr 3 min 42 sec) 
+Heartbeat CPU 0 instructions: 50000003 cycles: 25748153 heartbeat IPC: 1.29901 cumulative IPC: 1.2906 (Simulation time: 0 hr 5 min 7 sec) 
+Finished CPU 0 instructions: 25000004 cycles: 19370822 cumulative IPC: 1.2906 (Simulation time: 0 hr 5 min 7 sec) 
 
 ChampSim completed all CPUs
 
@@ -60,7 +60,7 @@ cpu0_STLB RFO       ACCESS:      10562  HIT:       9585  MISS:        977
 cpu0_STLB PREFETCH  ACCESS:          0  HIT:          0  MISS:          0
 cpu0_STLB WRITEBACK ACCESS:          0  HIT:          0  MISS:          0
 cpu0_STLB TRANSLATION ACCESS:          0  HIT:          0  MISS:          0
-cpu0_STLB PREFETCH  REQUESTED:        535  ISSUED:         66  USEFUL:          0  USELESS:          0
+cpu0_STLB PREFETCH  REQUESTED:        545  ISSUED:         66  USEFUL:          0  USELESS:          0
 cpu0_STLB AVERAGE MISS LATENCY: 56.3004 cycles
 cpu0_L1D TOTAL     ACCESS:    8669066  HIT:    8391248  MISS:     277818
 cpu0_L1D LOAD      ACCESS:    3065591  HIT:    2950605  MISS:     114986

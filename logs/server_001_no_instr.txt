@@ -11,19 +11,18 @@ VirtualMemory page size: 4096 log2_page_size: 12
 
 CPU 0 runs ipc1_public/server_001.champsimtrace.xz
 Basic BTB sets: 1024 ways: 8 indirect buffer size: 4096 RAS size: 64
-CPU 0 Entangling TLB prefetcher
 cpu0_L1D next line prefetcher
 WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
 WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
-Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 40 sec) 
-Heartbeat CPU 0 instructions: 20000002 cycles: 5099472 heartbeat IPC: 3.90936 cumulative IPC: 3.92198 (Simulation time: 0 hr 1 min 20 sec) 
+Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 39 sec) 
+Heartbeat CPU 0 instructions: 20000002 cycles: 5099472 heartbeat IPC: 3.90936 cumulative IPC: 3.92198 (Simulation time: 0 hr 1 min 18 sec) 
 
-Warmup complete CPU 0 instructions: 25000001 cycles: 6377484 (Simulation time: 0 hr 1 min 40 sec) 
+Warmup complete CPU 0 instructions: 25000001 cycles: 6377484 (Simulation time: 0 hr 1 min 37 sec) 
 
-Heartbeat CPU 0 instructions: 30000003 cycles: 9856215 heartbeat IPC: 2.10228 cumulative IPC: 1.43731 (Simulation time: 0 hr 2 min 19 sec) 
-Heartbeat CPU 0 instructions: 40000001 cycles: 18043252 heartbeat IPC: 1.22144 cumulative IPC: 1.28581 (Simulation time: 0 hr 3 min 45 sec) 
-Heartbeat CPU 0 instructions: 50000003 cycles: 25746244 heartbeat IPC: 1.2982 cumulative IPC: 1.29074 (Simulation time: 0 hr 5 min 8 sec) 
-Finished CPU 0 instructions: 25000002 cycles: 19368760 cumulative IPC: 1.29074 (Simulation time: 0 hr 5 min 8 sec) 
+Heartbeat CPU 0 instructions: 30000003 cycles: 9856215 heartbeat IPC: 2.10228 cumulative IPC: 1.43731 (Simulation time: 0 hr 2 min 9 sec) 
+Heartbeat CPU 0 instructions: 40000001 cycles: 18043252 heartbeat IPC: 1.22144 cumulative IPC: 1.28581 (Simulation time: 0 hr 3 min 21 sec) 
+Heartbeat CPU 0 instructions: 50000003 cycles: 25746244 heartbeat IPC: 1.2982 cumulative IPC: 1.29074 (Simulation time: 0 hr 4 min 29 sec) 
+Finished CPU 0 instructions: 25000002 cycles: 19368760 cumulative IPC: 1.29074 (Simulation time: 0 hr 4 min 29 sec) 
 
 ChampSim completed all CPUs
 
@@ -60,7 +59,7 @@ cpu0_STLB RFO       ACCESS:      10568  HIT:       9589  MISS:        979
 cpu0_STLB PREFETCH  ACCESS:          0  HIT:          0  MISS:          0
 cpu0_STLB WRITEBACK ACCESS:          0  HIT:          0  MISS:          0
 cpu0_STLB TRANSLATION ACCESS:          0  HIT:          0  MISS:          0
-cpu0_STLB PREFETCH  REQUESTED:     189780  ISSUED:        128  USEFUL:          0  USELESS:          0
+cpu0_STLB PREFETCH  REQUESTED:          0  ISSUED:          0  USEFUL:          0  USELESS:          0
 cpu0_STLB AVERAGE MISS LATENCY: 57.3566 cycles
 cpu0_L1D TOTAL     ACCESS:    8669071  HIT:    8391238  MISS:     277833
 cpu0_L1D LOAD      ACCESS:    3065680  HIT:    2950483  MISS:     115197
@@ -86,32 +85,6 @@ LLC WRITEBACK ACCESS:      91496  HIT:      91453  MISS:         43
 LLC TRANSLATION ACCESS:        915  HIT:        787  MISS:        128
 LLC PREFETCH  REQUESTED:          0  ISSUED:          0  USEFUL:          0  USELESS:          0
 LLC AVERAGE MISS LATENCY: 312.327 cycles
-CPU 0 TLB Entangling prefetcher final stats
-ACCESS:0 HIT:0 MISS:0
-IP accesses: d151 d151000 2391 / 196114
-IP misses: 0 0 19 / 14475
-IP hits: 0 0 0 / 0
-IP late: 0 0 0 / 0
-IP wrong: 0 0 0 / 0
-miss rate: 0.0738091
-coverage: 0
-coverage_late: 0
-accuracy: -nan
-accuracy_late: -nan
-discarded: 0
-evicts entangled j table: 0
-evicts entangled k table: 5445
-max bb size: 45
-formats: 5401 884 2589 1349 861 1070 0 
-hist_lookups: 16796 12121 2865 1052 566 301 163 150 104 77 61 50 15 6 0 0 3 1291 
-hist_lookups_evict: 0.008422 %
-hist_lookups_shortlat: 3.62427 %
-bb_found_hist: 0 10984 815 26 3 1 0 2 0 3 0 1 1 3 1 0 
-bb_found_summary: 12826 11840 1.08328
-entangled_found_hist: 0 80412 20185 15205 806 117 0 0 
-entangled_found_summary: 170206 116725 1.45818
-bb_ent_found_hist: 0 5397 423 4 1 8 0 2 0 49 0 0 1 2 0 0 
-bb_ent_found_summary: 6792 5887 1.15373
 
 DRAM Statistics
  CHANNEL 0

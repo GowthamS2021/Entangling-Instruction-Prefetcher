@@ -28,7 +28,8 @@ void CACHE::prefetcher_initialize() { std::cout << NAME << " arbitrary stride pr
 
 uint32_t CACHE::prefetcher_cache_operate(uint64_t addr, uint64_t ip, uint8_t cache_hit, uint8_t type, uint32_t metadata_in)
 {
-  if (cache_hit) return metadata_in;
+    if (!warmup_complete) return metadata_in;
+    if (cache_hit) return metadata_in;
     uint64_t pg_addr = addr >> LOG2_PAGE_SIZE;
     uint64_t index = (ip)%IP_TRACKER_COUNT;
     if (trackers[index].ip != ip){

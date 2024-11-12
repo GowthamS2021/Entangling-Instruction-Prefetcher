@@ -1,5 +1,5 @@
 {
-    "executable_name": "next_line",
+    "executable_name": "bin/next_line",
     "block_size": 64,
     "page_size": 4096,
     "heartbeat_frequency": 10000000,

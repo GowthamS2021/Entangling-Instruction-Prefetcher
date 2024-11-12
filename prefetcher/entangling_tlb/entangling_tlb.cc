@@ -878,6 +878,7 @@ void CACHE::prefetcher_initialize()
 uint32_t CACHE::prefetcher_cache_operate(uint64_t v_addr, uint64_t ip, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
 //   cerr << "notify" << endl;
+  if (!tlb_all_warmed_up) return metadata_in;
   tlb_cpu_id = cpu;
   tlb_current_cycle = current_cycle;
   uint64_t page_addr = v_addr >> LOG2_PAGE_SIZE;
@@ -1058,5 +1059,6 @@ uint32_t CACHE::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t wa
 void CACHE::prefetcher_final_stats()
 {
   cout << "CPU " << cpu << " TLB Entangling prefetcher final stats" << endl;
+  cout << "ACCESS:" << sim_access[cpu][PREFETCH] << " HIT:" << sim_hit[cpu][PREFETCH] << " MISS:" << sim_miss[cpu][PREFETCH] << endl;
   tlb_print_stats_table();
 }

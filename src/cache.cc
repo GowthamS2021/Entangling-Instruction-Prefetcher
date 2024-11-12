@@ -204,6 +204,9 @@ void CACHE::readlike_hit(std::size_t set, std::size_t way, PACKET& handle_pkt)
   impl_replacement_update_state(handle_pkt.cpu, set, way, hit_block.address, handle_pkt.ip, 0, handle_pkt.type, 1);
 
   // COLLECT STATS
+  if (NAME == "cpu0_STLB" && handle_pkt.type == PREFETCH){
+    // cerr << "reached " <<  sim_hit[handle_pkt.cpu][handle_pkt.type] << " " << sim_access[handle_pkt.cpu][handle_pkt.type] << " "<< endl;
+  }
   sim_hit[handle_pkt.cpu][handle_pkt.type]++;
   sim_access[handle_pkt.cpu][handle_pkt.type]++;
 
@@ -542,13 +545,18 @@ int CACHE::prefetch_line(uint64_t pf_addr, bool fill_this_level, uint32_t prefet
   pf_packet.cpu = cpu;
   pf_packet.address = pf_addr;
   pf_packet.v_address = virtual_prefetch ? pf_addr : 0;
-
   if (virtual_prefetch) {
+    if (NAME == "cpu0_STLB"){
+      // cerr << "NAME:" << NAME << " " << pf_packet.address << " " << VAPQ.full() << endl;
+    }
     if (!VAPQ.full()) {
       VAPQ.push_back(pf_packet);
       return 1;
     }
   } else {
+    if (NAME == "cpu0_STLB"){
+      // cerr << "NAME:" << NAME << " " << pf_packet.address << " " << PQ_ACCESS << endl;
+    }
     int result = add_pq(&pf_packet);
     if (result != -2) {
       if (result > 0)
