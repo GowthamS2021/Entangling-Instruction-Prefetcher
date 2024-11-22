@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "filename,IPC,Accuracy,Avg Miss Latency,LOAD MPKI"
+echo "trace,method,IPC,Avg Miss Latency"
 for file in logs/*.txt
 do
     IPC=$(cat $file | grep -F -e "IPC" | tail -1 | cut -d ' ' -f 5)
@@ -16,5 +16,8 @@ do
     else 
         acc=$(bc -l <<< "scale=3;($Useful*100/($Useful+$Useless))")
     fi
-    echo $file,$IPC,$acc,$AML,$MPKI 
+    filename=$(echo $file | cut -d '/' -f2)
+    trace=$(echo $filename | cut -d '_' -f1-2)
+    method=$(echo $filename | cut -d '_' -f3- | cut -d '.' -f1)
+    echo $trace,$method,$IPC,$AML 
 done 
