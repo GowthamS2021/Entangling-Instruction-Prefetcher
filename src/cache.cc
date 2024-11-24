@@ -334,10 +334,22 @@ bool CACHE::filllike_miss(std::size_t set, std::size_t way, PACKET& handle_pkt)
         return false;
     }
 
-    if (ever_seen_data)
-      evicting_address = fill_block.address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
-    else
-      evicting_address = fill_block.v_address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
+    if (NAME == "cpu0_L1I"){
+      if (!virtual_prefetch){
+        evicting_address = fill_block.address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
+      }
+      else
+        evicting_address = fill_block.v_address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
+      cerr << "NOTE:" << evicting_address << endl;
+    }
+    else {
+      if (ever_seen_data){
+        evicting_address = fill_block.address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
+      }
+      else
+        evicting_address = fill_block.v_address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
+    }
+
 
     if (fill_block.prefetch)
       pf_useless++;
@@ -546,17 +558,17 @@ int CACHE::prefetch_line(uint64_t pf_addr, bool fill_this_level, uint32_t prefet
   pf_packet.address = pf_addr;
   pf_packet.v_address = virtual_prefetch ? pf_addr : 0;
   if (virtual_prefetch) {
-    if (NAME == "cpu0_STLB"){
+    // if (NAME == "cpu0_STLB"){
       // cerr << "NAME:" << NAME << " " << pf_packet.address << " " << VAPQ.full() << endl;
-    }
+    // }
     if (!VAPQ.full()) {
       VAPQ.push_back(pf_packet);
       return 1;
     }
   } else {
-    if (NAME == "cpu0_STLB"){
+    // if (NAME == "cpu0_STLB"){
       // cerr << "NAME:" << NAME << " " << pf_packet.address << " " << PQ_ACCESS << endl;
-    }
+    // }
     int result = add_pq(&pf_packet);
     if (result != -2) {
       if (result > 0)

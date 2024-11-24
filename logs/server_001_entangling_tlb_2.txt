@@ -1,0 +1,54 @@
+
+*** ChampSim Multicore Out-of-Order Simulator ***
+
+Warmup Instructions: 25000000
+Simulation Instructions: 25000000
+Number of CPUs: 1
+Off-chip DRAM Size: 4 GiB Channels: 1 Width: 64-bit Data Rate: 3200 MT/s
+
+VirtualMemory physical capacity: 8588881920 num_ppages: 2096895
+VirtualMemory page size: 4096 log2_page_size: 12
+
+CPU 0 runs ipc1_public/server_001.champsimtrace.xz
+Basic BTB sets: 1024 ways: 8 indirect buffer size: 4096 RAS size: 64
+CPU 0 Entangling TLB prefetcher
+cpu0_L1D next line prefetcher
+WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
+WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
+Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 14 sec) 
+Heartbeat CPU 0 instructions: 20000002 cycles: 5099472 heartbeat IPC: 3.90936 cumulative IPC: 3.92198 (Simulation time: 0 hr 0 min 29 sec) 
+
+Warmup complete CPU 0 instructions: 25000001 cycles: 6377484 (Simulation time: 0 hr 0 min 37 sec) 
+
+DEADLOCK! CPU 0 cycle 7379135
+IFETCH_BUFFER head instr_id: 25003563 translated: 1 fetched: 0 scheduled: 0 executed: 0 is_memory: 0 num_reg_dependent: 0 event: 6379135
+ROB empty
+Load Queue Entry
+
+Store Queue Entry
+
+LLC MSHR empty
+
+cpu0_L2C MSHR empty
+
+cpu0_L1D MSHR empty
+
+cpu0_PTW MSHR empty
+
+cpu0_STLB MSHR empty
+
+cpu0_L1I MSHR empty
+
+cpu0_ITLB MSHR Entry
+[cpu0_ITLB MSHR] entry: 0 instr_id: 0 address: 4387880 full_addr: 10e1e2000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 1 instr_id: 0 address: 269a4bf full_addr: 9a692fc0 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 2 instr_id: 0 address: 617de80 full_addr: 185f7a000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 3 instr_id: 0 address: 6162880 full_addr: 1858a2000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 4 instr_id: 0 address: 11e1f38 full_addr: 4787ce18 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 5 instr_id: 0 address: 649080 full_addr: 19242000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 6 instr_id: 0 address: 4c33d80 full_addr: 130cf6000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+[cpu0_ITLB MSHR] entry: 7 instr_id: 0 address: 5b74840 full_addr: 16dd21000 type: 2 fill_level: 1 event_cycle: 18446744073709551615
+
+cpu0_DTLB MSHR empty
+
+

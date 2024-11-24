@@ -1054,41 +1054,8 @@ uint32_t O3_CPU::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t w
   return metadata_in;
 }
 
-
-/*
-uint64_t tag;                                        // L1I_TAG_BITS bits
-  uint32_t format;                                     // log2(L1I_ENTANGLED_NUM_FORMATS) bits
-  uint64_t entangled_addr[L1I_MAX_ENTANGLED_PER_LINE]; // JUST DIFF
-  uint32_t entangled_conf[L1I_MAX_ENTANGLED_PER_LINE]; // L1I_CONFIDENCE_COUNTER_BITS bits
-  uint32_t bb_size;                 
-
-
-*/
-
-void l1i_print_entangled_entry(l1i_entangled_entry entry){
-  cerr << hex << uppercase << setfill('0') << setw(3) << entry.tag << "," << entry.format << ",";
-  for(int i=0;i<L1I_MAX_ENTANGLED_PER_LINE;i++){
-    cerr << hex << uppercase << setfill('0') << setw(8) <<  entry.entangled_addr[i] << "," << entry.entangled_conf[i] << ",";
-  }  
-  cerr << entry.bb_size << endl;
-}
-
-
-// l1i_entangled_entry l1i_entangled_table[NUM_CPUS][L1I_ENTANGLED_TABLE_SETS][L1I_ENTANGLED_TABLE_WAYS];
-void l1i_print_entangled_table(uint8_t cpu){
-  cerr << "SET,WAY,Tag,Format,Addr1,conf1,Addr2,conf1,Addr3,conf3,Addr4,conf4,Addr5,conf5,Addr6,conf6,bb_size" << endl;
-  for(int i=0;i<L1I_ENTANGLED_TABLE_SETS;i++){
-    // cout << "SET:" << dec << i+1 << endl;
-    for(int j = 0;j < L1I_ENTANGLED_TABLE_WAYS;j++){
-      cerr << dec << i << "," << j << ",";
-      l1i_print_entangled_entry(l1i_entangled_table[cpu][i][j]);
-    }
-  }
-}
-
 void O3_CPU::prefetcher_final_stats()
 {
   cout << "CPU " << cpu << " L1I Entangling prefetcher final stats" << endl;
   l1i_print_stats_table();
-  l1i_print_entangled_table(cpu);
 }

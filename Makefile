@@ -1,14 +1,14 @@
 CC := gcc
 CXX := g++
 CFLAGS := -Wall -O3 -std=gnu99
-CXXFLAGS := -Wall -O3 -std=c++17
+CXXFLAGS := -Wall -O3 -std=c++17 -g
 CPPFLAGS :=  -Iinc -MMD -MP
 LDFLAGS := 
 LDLIBS := 
 
 .phony: all clean
 
-all: bin/entangling_next_line
+all: bin/physical_entangling
 
 clean: 
 	$(RM) inc/champsim_constants.h
@@ -23,18 +23,16 @@ clean:
 	 find replacement/lru -name \*.d -delete
 	 find prefetcher/no -name \*.o -delete
 	 find prefetcher/no -name \*.d -delete
-	 find prefetcher/entangling -name \*.o -delete
-	 find prefetcher/entangling -name \*.d -delete
+	 find prefetcher/physical_entangling -name \*.o -delete
+	 find prefetcher/physical_entangling -name \*.d -delete
 	 find prefetcher/next_line -name \*.o -delete
 	 find prefetcher/next_line -name \*.d -delete
-	 find prefetcher/next_line_tlb -name \*.o -delete
-	 find prefetcher/next_line_tlb -name \*.d -delete
 	 find branch/hashed_perceptron -name \*.o -delete
 	 find branch/hashed_perceptron -name \*.d -delete
 	 find btb/basic_btb -name \*.o -delete
 	 find btb/basic_btb -name \*.d -delete
 
-bin/entangling_next_line: $(patsubst %.cc,%.o,$(wildcard src/*.cc)) obj/repl_rreplacementDlru.a obj/pref_pprefetcherDno.a obj/pref_pprefetcherDentangling.a obj/pref_pprefetcherDnext_line.a obj/pref_pprefetcherDnext_line_tlb.a obj/bpred_bbranchDhashed_perceptron.a obj/btb_bbtbDbasic_btb.a
+bin/physical_entangling: $(patsubst %.cc,%.o,$(wildcard src/*.cc)) obj/repl_rreplacementDlru.a obj/pref_pprefetcherDno.a obj/pref_pprefetcherDphysical_entangling.a obj/pref_pprefetcherDnext_line.a obj/bpred_bbranchDhashed_perceptron.a obj/btb_bbtbDbasic_btb.a
 	$(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 replacement/lru/%.o: CFLAGS += -Ireplacement/lru
@@ -51,10 +49,10 @@ obj/pref_pprefetcherDno.a: $(patsubst %.cc,%.o,$(wildcard prefetcher/no/*.cc)) $
 	@mkdir -p $(dir $@)
 	ar -rcs $@ $^
 
-prefetcher/entangling/%.o: CFLAGS += -Iprefetcher/entangling
-prefetcher/entangling/%.o: CXXFLAGS += -Iprefetcher/entangling
-prefetcher/entangling/%.o: CXXFLAGS +=  -Dprefetcher_initialize=pref_pprefetcherDentangling_initialize -Dprefetcher_branch_operate=pref_pprefetcherDentangling_branch_operate -Dprefetcher_cache_operate=pref_pprefetcherDentangling_cache_operate -Dprefetcher_cycle_operate=pref_pprefetcherDentangling_cycle_operate -Dprefetcher_cache_fill=pref_pprefetcherDentangling_cache_fill -Dprefetcher_final_stats=pref_pprefetcherDentangling_final_stats -Dl1i_prefetcher_initialize=pref_pprefetcherDentangling_initialize -Dl1i_prefetcher_branch_operate=pref_pprefetcherDentangling_branch_operate -Dl1i_prefetcher_cache_operate=pref_pprefetcherDentangling_cache_operate -Dl1i_prefetcher_cycle_operate=pref_pprefetcherDentangling_cycle_operate -Dl1i_prefetcher_cache_fill=pref_pprefetcherDentangling_cache_fill -Dl1i_prefetcher_final_stats=pref_pprefetcherDentangling_final_stats
-obj/pref_pprefetcherDentangling.a: $(patsubst %.cc,%.o,$(wildcard prefetcher/entangling/*.cc)) $(patsubst %.c,%.o,$(wildcard prefetcher/entangling/*.c))
+prefetcher/physical_entangling/%.o: CFLAGS += -Iprefetcher/physical_entangling
+prefetcher/physical_entangling/%.o: CXXFLAGS += -Iprefetcher/physical_entangling
+prefetcher/physical_entangling/%.o: CXXFLAGS +=  -Dprefetcher_initialize=pref_pprefetcherDphysical_entangling_initialize -Dprefetcher_branch_operate=pref_pprefetcherDphysical_entangling_branch_operate -Dprefetcher_cache_operate=pref_pprefetcherDphysical_entangling_cache_operate -Dprefetcher_cycle_operate=pref_pprefetcherDphysical_entangling_cycle_operate -Dprefetcher_cache_fill=pref_pprefetcherDphysical_entangling_cache_fill -Dprefetcher_final_stats=pref_pprefetcherDphysical_entangling_final_stats -Dl1i_prefetcher_initialize=pref_pprefetcherDphysical_entangling_initialize -Dl1i_prefetcher_branch_operate=pref_pprefetcherDphysical_entangling_branch_operate -Dl1i_prefetcher_cache_operate=pref_pprefetcherDphysical_entangling_cache_operate -Dl1i_prefetcher_cycle_operate=pref_pprefetcherDphysical_entangling_cycle_operate -Dl1i_prefetcher_cache_fill=pref_pprefetcherDphysical_entangling_cache_fill -Dl1i_prefetcher_final_stats=pref_pprefetcherDphysical_entangling_final_stats
+obj/pref_pprefetcherDphysical_entangling.a: $(patsubst %.cc,%.o,$(wildcard prefetcher/physical_entangling/*.cc)) $(patsubst %.c,%.o,$(wildcard prefetcher/physical_entangling/*.c))
 	@mkdir -p $(dir $@)
 	ar -rcs $@ $^
 
@@ -62,13 +60,6 @@ prefetcher/next_line/%.o: CFLAGS += -Iprefetcher/next_line
 prefetcher/next_line/%.o: CXXFLAGS += -Iprefetcher/next_line
 prefetcher/next_line/%.o: CXXFLAGS +=  -Dprefetcher_initialize=pref_pprefetcherDnext_line_initialize -Dprefetcher_cache_operate=pref_pprefetcherDnext_line_cache_operate -Dprefetcher_cache_fill=pref_pprefetcherDnext_line_cache_fill -Dprefetcher_cycle_operate=pref_pprefetcherDnext_line_cycle_operate -Dprefetcher_final_stats=pref_pprefetcherDnext_line_final_stats -Dl1d_prefetcher_initialize=pref_pprefetcherDnext_line_initialize -Dl2c_prefetcher_initialize=pref_pprefetcherDnext_line_initialize -Dllc_prefetcher_initialize=pref_pprefetcherDnext_line_initialize -Dl1d_prefetcher_operate=pref_pprefetcherDnext_line_cache_operate -Dl2c_prefetcher_operate=pref_pprefetcherDnext_line_cache_operate -Dllc_prefetcher_operate=pref_pprefetcherDnext_line_cache_operate -Dl1d_prefetcher_cache_fill=pref_pprefetcherDnext_line_cache_fill -Dl2c_prefetcher_cache_fill=pref_pprefetcherDnext_line_cache_fill -Dllc_prefetcher_cache_fill=pref_pprefetcherDnext_line_cache_fill -Dl1d_prefetcher_final_stats=pref_pprefetcherDnext_line_final_stats -Dl2c_prefetcher_final_stats=pref_pprefetcherDnext_line_final_stats -Dllc_prefetcher_final_stats=pref_pprefetcherDnext_line_final_stats
 obj/pref_pprefetcherDnext_line.a: $(patsubst %.cc,%.o,$(wildcard prefetcher/next_line/*.cc)) $(patsubst %.c,%.o,$(wildcard prefetcher/next_line/*.c))
-	@mkdir -p $(dir $@)
-	ar -rcs $@ $^
-
-prefetcher/next_line_tlb/%.o: CFLAGS += -Iprefetcher/next_line_tlb
-prefetcher/next_line_tlb/%.o: CXXFLAGS += -Iprefetcher/next_line_tlb
-prefetcher/next_line_tlb/%.o: CXXFLAGS +=  -Dprefetcher_initialize=pref_pprefetcherDnext_line_tlb_initialize -Dprefetcher_cache_operate=pref_pprefetcherDnext_line_tlb_cache_operate -Dprefetcher_cache_fill=pref_pprefetcherDnext_line_tlb_cache_fill -Dprefetcher_cycle_operate=pref_pprefetcherDnext_line_tlb_cycle_operate -Dprefetcher_final_stats=pref_pprefetcherDnext_line_tlb_final_stats -Dl1d_prefetcher_initialize=pref_pprefetcherDnext_line_tlb_initialize -Dl2c_prefetcher_initialize=pref_pprefetcherDnext_line_tlb_initialize -Dllc_prefetcher_initialize=pref_pprefetcherDnext_line_tlb_initialize -Dl1d_prefetcher_operate=pref_pprefetcherDnext_line_tlb_cache_operate -Dl2c_prefetcher_operate=pref_pprefetcherDnext_line_tlb_cache_operate -Dllc_prefetcher_operate=pref_pprefetcherDnext_line_tlb_cache_operate -Dl1d_prefetcher_cache_fill=pref_pprefetcherDnext_line_tlb_cache_fill -Dl2c_prefetcher_cache_fill=pref_pprefetcherDnext_line_tlb_cache_fill -Dllc_prefetcher_cache_fill=pref_pprefetcherDnext_line_tlb_cache_fill -Dl1d_prefetcher_final_stats=pref_pprefetcherDnext_line_tlb_final_stats -Dl2c_prefetcher_final_stats=pref_pprefetcherDnext_line_tlb_final_stats -Dllc_prefetcher_final_stats=pref_pprefetcherDnext_line_tlb_final_stats
-obj/pref_pprefetcherDnext_line_tlb.a: $(patsubst %.cc,%.o,$(wildcard prefetcher/next_line_tlb/*.cc)) $(patsubst %.c,%.o,$(wildcard prefetcher/next_line_tlb/*.c))
 	@mkdir -p $(dir $@)
 	ar -rcs $@ $^
 
@@ -89,9 +80,8 @@ obj/btb_bbtbDbasic_btb.a: $(patsubst %.cc,%.o,$(wildcard btb/basic_btb/*.cc)) $(
 -include $(wildcard src/*.d)
 -include $(wildcard replacement/lru/*.d)
 -include $(wildcard prefetcher/no/*.d)
--include $(wildcard prefetcher/entangling/*.d)
+-include $(wildcard prefetcher/physical_entangling/*.d)
 -include $(wildcard prefetcher/next_line/*.d)
--include $(wildcard prefetcher/next_line_tlb/*.d)
 -include $(wildcard branch/hashed_perceptron/*.d)
 -include $(wildcard btb/basic_btb/*.d)
 

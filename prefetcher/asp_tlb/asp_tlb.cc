@@ -47,7 +47,6 @@ uint32_t CACHE::prefetcher_cache_operate(uint64_t addr, uint64_t ip, uint8_t cac
             new_stride = trackers[index].addr - pg_addr;
             new_stride *= -1;
         }
-        // cerr << "IP: " << ip << " INDEX:" << index << " PG_ADDR:" <<  pg_addr << " ADDR:" << trackers[index].addr << " STRIDE:" << new_stride << " PREV_STRIDE:" << trackers[index].stride << " PREV_STATE:" << trackers[index].state << endl; 
         if (new_stride == 0) return metadata_in;
         if (trackers[index].state == INTITAL){
             if (new_stride == trackers[index].stride){
