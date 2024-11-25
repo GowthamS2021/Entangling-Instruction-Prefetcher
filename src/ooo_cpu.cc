@@ -235,6 +235,7 @@ void O3_CPU::init_instruction(ooo_model_instr arch_instr)
 
     if (predicted_branch_target != arch_instr.branch_target) {
       branch_mispredictions++;
+      prefetcher_squash(arch_instr.ip, arch_instr.instr_id);
       total_rob_occupancy_at_branch_mispredict += ROB.occupancy();
       branch_type_misses[arch_instr.branch_type]++;
       if (warmup_complete[cpu]) {

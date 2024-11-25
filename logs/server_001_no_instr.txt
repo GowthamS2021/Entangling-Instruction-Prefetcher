@@ -14,15 +14,15 @@ Basic BTB sets: 1024 ways: 8 indirect buffer size: 4096 RAS size: 64
 cpu0_L1D next line prefetcher
 WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
 WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
-Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 39 sec) 
-Heartbeat CPU 0 instructions: 20000002 cycles: 5099472 heartbeat IPC: 3.90936 cumulative IPC: 3.92198 (Simulation time: 0 hr 1 min 18 sec) 
+Heartbeat CPU 0 instructions: 10000003 cycles: 2541507 heartbeat IPC: 3.93467 cumulative IPC: 3.93467 (Simulation time: 0 hr 0 min 15 sec) 
+Heartbeat CPU 0 instructions: 20000002 cycles: 5099472 heartbeat IPC: 3.90936 cumulative IPC: 3.92198 (Simulation time: 0 hr 0 min 30 sec) 
 
-Warmup complete CPU 0 instructions: 25000001 cycles: 6377484 (Simulation time: 0 hr 1 min 37 sec) 
+Warmup complete CPU 0 instructions: 25000001 cycles: 6377484 (Simulation time: 0 hr 0 min 37 sec) 
 
-Heartbeat CPU 0 instructions: 30000003 cycles: 9856215 heartbeat IPC: 2.10228 cumulative IPC: 1.43731 (Simulation time: 0 hr 2 min 9 sec) 
-Heartbeat CPU 0 instructions: 40000001 cycles: 18043252 heartbeat IPC: 1.22144 cumulative IPC: 1.28581 (Simulation time: 0 hr 3 min 21 sec) 
-Heartbeat CPU 0 instructions: 50000003 cycles: 25746244 heartbeat IPC: 1.2982 cumulative IPC: 1.29074 (Simulation time: 0 hr 4 min 29 sec) 
-Finished CPU 0 instructions: 25000002 cycles: 19368760 cumulative IPC: 1.29074 (Simulation time: 0 hr 4 min 29 sec) 
+Heartbeat CPU 0 instructions: 30000003 cycles: 9856215 heartbeat IPC: 2.10228 cumulative IPC: 1.43731 (Simulation time: 0 hr 0 min 50 sec) 
+Heartbeat CPU 0 instructions: 40000001 cycles: 18043252 heartbeat IPC: 1.22144 cumulative IPC: 1.28581 (Simulation time: 0 hr 1 min 35 sec) 
+Heartbeat CPU 0 instructions: 50000003 cycles: 25746244 heartbeat IPC: 1.2982 cumulative IPC: 1.29074 (Simulation time: 0 hr 2 min 14 sec) 
+Finished CPU 0 instructions: 25000002 cycles: 19368760 cumulative IPC: 1.29074 (Simulation time: 0 hr 2 min 14 sec) 
 
 ChampSim completed all CPUs
 

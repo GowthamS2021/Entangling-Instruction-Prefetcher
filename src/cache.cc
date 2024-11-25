@@ -340,7 +340,7 @@ bool CACHE::filllike_miss(std::size_t set, std::size_t way, PACKET& handle_pkt)
       }
       else
         evicting_address = fill_block.v_address & ~bitmask(match_offset_bits ? 0 : OFFSET_BITS);
-      cerr << "NOTE:" << evicting_address << endl;
+      // cerr << "NOTE:" << evicting_address << endl;
     }
     else {
       if (ever_seen_data){

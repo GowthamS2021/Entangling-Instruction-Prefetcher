@@ -1012,6 +1012,8 @@ void O3_CPU::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_
 // IMPORTANT: This function needs to be called in the same order as prefetcher_cache_operate,
 // meaning that after calling prefetcher_squash, none of the squashed instructions should call prefetcher_cache_operate.
 // Otherwise, performance may be sub-optimal.
+
+
 void O3_CPU::prefetcher_squash(uint64_t ip, uint64_t instr_id)
 {
   l1i_cpu_id = cpu;
@@ -1043,7 +1045,7 @@ void O3_CPU::prefetcher_squash(uint64_t ip, uint64_t instr_id)
 // NOTE: Here metadata_in receives a boolean indicating if the instruction is from wrong_path or not.
 // This information is only used to gather stats.
 // (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
-uint32_t O3_CPU::prefetcher_cache_operate(uint64_t addr, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
+uint32_t O3_CPU::prefetcher_cache_operate(uint64_t addr, uint64_t ip, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;

@@ -875,11 +875,14 @@ void O3_CPU::prefetcher_initialize()
 void O3_CPU::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t branch_target) {}
 
 // (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
-uint32_t O3_CPU::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
+void O3_CPU::prefetcher_squash(uint64_t ip, uint64_t instr_id){}
+
+
+uint32_t O3_CPU::prefetcher_cache_operate(uint64_t p_addr, uint64_t ip, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;
-  uint64_t line_addr = v_addr >> LOG2_BLOCK_SIZE;
+  uint64_t line_addr = p_addr >> LOG2_BLOCK_SIZE;
   // cerr << "NOTE" << endl;
   if (!cache_hit)
     assert(!prefetch_hit);
@@ -913,7 +916,7 @@ uint32_t O3_CPU::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, ui
   if (bb_size)
     l1i_stats_basic_blocks[bb_size]++;
   for (uint32_t i = 1; i <= bb_size; i++) {
-    uint64_t pf_addr = v_addr + i * (1 << LOG2_BLOCK_SIZE);
+    uint64_t pf_addr = p_addr + i * (1 << LOG2_BLOCK_SIZE);
     if (!l1i_ongoing_request(pf_addr >> LOG2_BLOCK_SIZE)) {
       if (prefetch_code_line(pf_addr)) {
         l1i_add_timing_entry(pf_addr >> LOG2_BLOCK_SIZE, 0, L1I_ENTANGLED_TABLE_WAYS);
@@ -1006,11 +1009,11 @@ void O3_CPU::prefetcher_cycle_operate()
 }
 
 // impl_prefetcher_cache_fill(uint64_t addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_addr, uint32_t metadata_in)
-uint32_t O3_CPU::prefetcher_cache_fill(uint64_t v_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr, uint32_t metadata_in)
+uint32_t O3_CPU::prefetcher_cache_fill(uint64_t p_addr, uint32_t set, uint32_t way, uint8_t prefetch, uint64_t evicted_v_addr, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;
-  uint64_t line_addr = (v_addr >> LOG2_BLOCK_SIZE);
+  uint64_t line_addr = (p_addr >> LOG2_BLOCK_SIZE);
   uint64_t evicted_line_addr = (evicted_v_addr >> LOG2_BLOCK_SIZE);
   // Line is in cache
   if (evicted_v_addr) {

@@ -874,8 +874,11 @@ void O3_CPU::prefetcher_initialize()
 
 void O3_CPU::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t branch_target) {}
 
+void O3_CPU::prefetcher_squash(uint64_t ip, uint64_t instr_id){}
+
+
 // (uint64_t addr, uint64_t ip, uint8_t cache_hit, bool useful_prefetch, uint8_t type, uint32_t metadata_in)
-uint32_t O3_CPU::prefetcher_cache_operate(uint64_t v_addr, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
+uint32_t O3_CPU::prefetcher_cache_operate(uint64_t v_addr, uint64_t ip, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;

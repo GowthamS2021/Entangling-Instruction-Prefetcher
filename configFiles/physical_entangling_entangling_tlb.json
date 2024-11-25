@@ -1,5 +1,5 @@
 {
-    "executable_name": "bin/improved_entangling",
+    "executable_name": "bin/physical_entangling_entangling",
     "block_size": 64,
     "page_size": 4096,
     "heartbeat_frequency": 10000000,
@@ -49,9 +49,9 @@
         "max_tag_check": 2,
         "max_fill": 2,
         "prefetch_as_load": false,
-        "virtual_prefetch": true,
+        "virtual_prefetch": false,
         "prefetch_activate": "LOAD,PREFETCH",
-        "prefetcher": "improved_entangling"
+        "prefetcher": "physical_entangling"
     },
 
     "L1D": {
@@ -122,7 +122,10 @@
         "latency": 8,
         "max_tag_check": 1,
         "max_fill": 1,
-        "prefetch_as_load": false
+        "prefetch_as_load": false,
+        "virtual_prefetch": true,
+        "prefetch_activate": "LOAD,PREFETCH",
+        "prefetcher": "entangling_tlb"
     },
 
 	"PTW": {

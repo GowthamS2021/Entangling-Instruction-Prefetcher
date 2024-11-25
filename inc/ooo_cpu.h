@@ -143,6 +143,8 @@ public:
 
 #include "ooo_cpu_modules.inc"
 
+  void prefetcher_squash(uint64_t ip, uint64_t instr_id);
+
   const bpred_t bpred_type;
   const btb_t btb_type;
   const ipref_t ipref_type;
