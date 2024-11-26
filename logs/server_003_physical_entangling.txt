@@ -18,12 +18,12 @@ WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) i
 Heartbeat CPU 0 instructions: 10000001 cycles: 2543421 heartbeat IPC: 3.93171 cumulative IPC: 3.93171 (Simulation time: 0 hr 0 min 26 sec) 
 Heartbeat CPU 0 instructions: 20000003 cycles: 5096041 heartbeat IPC: 3.91754 cumulative IPC: 3.92462 (Simulation time: 0 hr 0 min 53 sec) 
 
-Warmup complete CPU 0 instructions: 25000002 cycles: 6360706 (Simulation time: 0 hr 1 min 6 sec) 
+Warmup complete CPU 0 instructions: 25000002 cycles: 6360706 (Simulation time: 0 hr 1 min 8 sec) 
 
-Heartbeat CPU 0 instructions: 30000004 cycles: 9152688 heartbeat IPC: 2.46509 cumulative IPC: 1.79084 (Simulation time: 0 hr 1 min 26 sec) 
-Heartbeat CPU 0 instructions: 40000004 cycles: 16580260 heartbeat IPC: 1.34633 cumulative IPC: 1.46777 (Simulation time: 0 hr 2 min 11 sec) 
-Heartbeat CPU 0 instructions: 50000002 cycles: 24441901 heartbeat IPC: 1.272 cumulative IPC: 1.38265 (Simulation time: 0 hr 2 min 54 sec) 
-Finished CPU 0 instructions: 25000000 cycles: 18081195 cumulative IPC: 1.38265 (Simulation time: 0 hr 2 min 54 sec) 
+Heartbeat CPU 0 instructions: 30000004 cycles: 9152688 heartbeat IPC: 2.46509 cumulative IPC: 1.79084 (Simulation time: 0 hr 1 min 30 sec) 
+Heartbeat CPU 0 instructions: 40000004 cycles: 16580260 heartbeat IPC: 1.34633 cumulative IPC: 1.46777 (Simulation time: 0 hr 2 min 17 sec) 
+Heartbeat CPU 0 instructions: 50000002 cycles: 24441901 heartbeat IPC: 1.272 cumulative IPC: 1.38265 (Simulation time: 0 hr 3 min 3 sec) 
+Finished CPU 0 instructions: 25000000 cycles: 18081195 cumulative IPC: 1.38265 (Simulation time: 0 hr 3 min 3 sec) 
 
 ChampSim completed all CPUs
 

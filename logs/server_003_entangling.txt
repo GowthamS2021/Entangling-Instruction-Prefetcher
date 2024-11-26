@@ -16,14 +16,14 @@ cpu0_L1D next line prefetcher
 WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
 WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
 Heartbeat CPU 0 instructions: 10000000 cycles: 2558590 heartbeat IPC: 3.9084 cumulative IPC: 3.9084 (Simulation time: 0 hr 0 min 26 sec) 
-Heartbeat CPU 0 instructions: 20000003 cycles: 5123085 heartbeat IPC: 3.8994 cumulative IPC: 3.9039 (Simulation time: 0 hr 0 min 52 sec) 
+Heartbeat CPU 0 instructions: 20000003 cycles: 5123085 heartbeat IPC: 3.8994 cumulative IPC: 3.9039 (Simulation time: 0 hr 0 min 53 sec) 
 
-Warmup complete CPU 0 instructions: 25000002 cycles: 6396712 (Simulation time: 0 hr 1 min 5 sec) 
+Warmup complete CPU 0 instructions: 25000002 cycles: 6396712 (Simulation time: 0 hr 1 min 7 sec) 
 
-Heartbeat CPU 0 instructions: 30000002 cycles: 9205191 heartbeat IPC: 2.44972 cumulative IPC: 1.78032 (Simulation time: 0 hr 1 min 25 sec) 
-Heartbeat CPU 0 instructions: 40000004 cycles: 16632342 heartbeat IPC: 1.34641 cumulative IPC: 1.46547 (Simulation time: 0 hr 2 min 10 sec) 
-Heartbeat CPU 0 instructions: 50000002 cycles: 24469112 heartbeat IPC: 1.27604 cumulative IPC: 1.38332 (Simulation time: 0 hr 2 min 55 sec) 
-Finished CPU 0 instructions: 25000000 cycles: 18072400 cumulative IPC: 1.38332 (Simulation time: 0 hr 2 min 55 sec) 
+Heartbeat CPU 0 instructions: 30000002 cycles: 9205191 heartbeat IPC: 2.44972 cumulative IPC: 1.78032 (Simulation time: 0 hr 1 min 30 sec) 
+Heartbeat CPU 0 instructions: 40000004 cycles: 16632342 heartbeat IPC: 1.34641 cumulative IPC: 1.46547 (Simulation time: 0 hr 2 min 16 sec) 
+Heartbeat CPU 0 instructions: 50000002 cycles: 24469112 heartbeat IPC: 1.27604 cumulative IPC: 1.38332 (Simulation time: 0 hr 3 min 1 sec) 
+Finished CPU 0 instructions: 25000000 cycles: 18072400 cumulative IPC: 1.38332 (Simulation time: 0 hr 3 min 1 sec) 
 
 ChampSim completed all CPUs
 

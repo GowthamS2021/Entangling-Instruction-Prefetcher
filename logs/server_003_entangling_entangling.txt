@@ -16,15 +16,15 @@ CPU 0 Entangling TLB prefetcher
 cpu0_L1D next line prefetcher
 WARNING: The extended signature CACHE::prefetch_line(ip, base_addr, pf_addr, fill_this_level, prefetch_metadata) is deprecated.
 WARNING: Use CACHE::prefetch_line(pf_addr, fill_this_level, prefetch_metadata) instead.
-Heartbeat CPU 0 instructions: 10000000 cycles: 2558590 heartbeat IPC: 3.9084 cumulative IPC: 3.9084 (Simulation time: 0 hr 0 min 26 sec) 
-Heartbeat CPU 0 instructions: 20000003 cycles: 5123085 heartbeat IPC: 3.8994 cumulative IPC: 3.9039 (Simulation time: 0 hr 0 min 52 sec) 
+Heartbeat CPU 0 instructions: 10000000 cycles: 2558590 heartbeat IPC: 3.9084 cumulative IPC: 3.9084 (Simulation time: 0 hr 0 min 25 sec) 
+Heartbeat CPU 0 instructions: 20000003 cycles: 5123085 heartbeat IPC: 3.8994 cumulative IPC: 3.9039 (Simulation time: 0 hr 0 min 51 sec) 
 
-Warmup complete CPU 0 instructions: 25000002 cycles: 6396712 (Simulation time: 0 hr 1 min 6 sec) 
+Warmup complete CPU 0 instructions: 25000002 cycles: 6396712 (Simulation time: 0 hr 1 min 4 sec) 
 
-Heartbeat CPU 0 instructions: 30000002 cycles: 9206233 heartbeat IPC: 2.44909 cumulative IPC: 1.77966 (Simulation time: 0 hr 1 min 27 sec) 
-Heartbeat CPU 0 instructions: 40000004 cycles: 16641737 heartbeat IPC: 1.3449 cumulative IPC: 1.46413 (Simulation time: 0 hr 2 min 15 sec) 
-Heartbeat CPU 0 instructions: 50000002 cycles: 24443230 heartbeat IPC: 1.28181 cumulative IPC: 1.38531 (Simulation time: 0 hr 3 min 1 sec) 
-Finished CPU 0 instructions: 25000000 cycles: 18046518 cumulative IPC: 1.38531 (Simulation time: 0 hr 3 min 1 sec) 
+Heartbeat CPU 0 instructions: 30000002 cycles: 9206233 heartbeat IPC: 2.44909 cumulative IPC: 1.77966 (Simulation time: 0 hr 1 min 25 sec) 
+Heartbeat CPU 0 instructions: 40000004 cycles: 16641737 heartbeat IPC: 1.3449 cumulative IPC: 1.46413 (Simulation time: 0 hr 2 min 11 sec) 
+Heartbeat CPU 0 instructions: 50000002 cycles: 24443230 heartbeat IPC: 1.28181 cumulative IPC: 1.38531 (Simulation time: 0 hr 2 min 58 sec) 
+Finished CPU 0 instructions: 25000000 cycles: 18046518 cumulative IPC: 1.38531 (Simulation time: 0 hr 2 min 58 sec) 
 
 ChampSim completed all CPUs
 
